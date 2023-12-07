@@ -1,0 +1,16 @@
+{
+  "name": "ai-example",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "npx wrangler deploy",
+    "start": "npx wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^3.19.0"
+  },
+  "dependencies": {
+    "@cloudflare/ai": "^1.0.6",
+    "hono": "^3.7.0"
+  }
+}

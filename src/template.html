@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Cloudflare AI Example</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+      @import url('https://unpkg.com/normalize.css');
+      html {
+        font-family: 'Roboto Mono', monospace;
+        line-height: 1.5;
+        & * { font-size: 16px }
+      }
+
+      div#content {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      div#header { 
+        align-items: center;
+        gap: 20px;
+        display: flex; 
+        justify-content: center;
+      }
+
+      div#response {
+        position: fixed;
+        top: 33%;
+        width: 50%;
+      }
+
+      form#query-form { 
+        bottom: 20px;
+        position: fixed;
+        display: flex;
+        gap: 20px;
+        margin: 0 auto;
+        width: 90%;
+      }
+
+      form#query-form input { 
+        flex: 1;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <div id="header">
+        <h1>Cloudflare AI - Blocking</h1>
+        <p><a href="/">(Streaming)</a></p>
+      </div>
+
+      <div id="response"></div>
+
+      <form id="query-form">
+        <input 
+          autofocus
+          name="query"
+          placeholder="Ask the AI anything" 
+          type="text" 
+        >
+        </input>
+        <button type="submit">Ask</button>
+      </form>
+    </div>
+
+    <script>
+      const submitForm = async (event) => {
+        event.preventDefault()
+
+        // post json to /
+        const response = await fetch("/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            query: event.target.query.value
+          })
+        })
+
+        const answer = await response.text()
+        document.querySelector("div#response").innerHTML = answer
+
+        event.target.query.value = ""
+      }
+
+      document.querySelector("form#query-form").addEventListener("submit", submitForm)
+    </script>
+  </body>
+</html>
